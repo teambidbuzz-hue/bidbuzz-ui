@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api").replace("localhost", "127.0.0.1");
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL?.replace(/\/+$/, "").replace("localhost", "127.0.0.1") || "";
+const API_BASE_URL = BACKEND_URL ? `${BACKEND_URL}/api` : "";
 
 export async function getTournamentMetadata(id: string, pageType: 'details' | 'registration' | 'auction'): Promise<Metadata> {
   try {

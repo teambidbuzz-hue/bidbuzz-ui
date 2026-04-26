@@ -1,18 +1,16 @@
-let API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-// Dynamically use the current hostname if accessed via a local network IP (like from a phone)
-// Only applies to private/local IPs — never rewrites on production domains like Vercel
-if (typeof window !== "undefined") {
-  const hostname = window.location.hostname;
-  const isPrivateIp = /^(10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.)/.test(hostname);
-  if (isPrivateIp && !API_BASE_URL.includes(hostname)) {
-    API_BASE_URL = `http://${hostname}:8000/api`;
+if (!BACKEND_BASE_URL) {
+  if (typeof window !== "undefined") {
+    console.error("NEXT_PUBLIC_BACKEND_URL is not set. API calls will fail.");
   }
 }
 
+const API_BASE_URL = BACKEND_BASE_URL ? `${BACKEND_BASE_URL.replace(/\/+$/, "")}/api` : "";
+
 // Backend base URL (without /api) — used to rewrite photo URLs
 export function getBackendBaseUrl(): string {
-  return API_BASE_URL.replace(/\/api\/?$/, "");
+  return BACKEND_BASE_URL?.replace(/\/+$/, "") || "";
 }
 
 interface ApiResponse<T = unknown> {
