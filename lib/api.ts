@@ -99,17 +99,13 @@ async function request<T>(
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Accept: "application/json",
+    "ngrok-skip-browser-warning": "true",
     ...(options.headers as Record<string, string>),
   };
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
-
-  console.log('process.env.NEXT_PUBLIC_ABLY_KEY:', process.env.NEXT_PUBLIC_ABLY_KEY);
-  console.log('process.env.NEXT_PUBLIC_BACKEND_URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
-  console.log('API_BASE_URL:', API_BASE_URL);
-
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
@@ -143,6 +139,7 @@ async function requestFormData<T>(
 
   const headers: Record<string, string> = {
     Accept: "application/json",
+    "ngrok-skip-browser-warning": "true",
   };
 
   if (token) {
