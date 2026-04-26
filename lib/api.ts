@@ -106,6 +106,7 @@ async function request<T>(
     headers["Authorization"] = `Bearer ${token}`;
   }
 
+  console.log('process.env.NEXT_PUBLIC_ABLY_KEY:', process.env.NEXT_PUBLIC_ABLY_KEY);
   console.log('process.env.NEXT_PUBLIC_BACKEND_URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
   console.log('API_BASE_URL:', API_BASE_URL);
 
